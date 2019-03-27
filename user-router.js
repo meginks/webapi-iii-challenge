@@ -50,6 +50,28 @@ router.post('/', async (req, res) => {
     }
 }) 
 
+// Put user 
+
+router.put('/:id', async (req, res) => {
+    try {
+        const user = await UserDB.update(req.params.id, req.body); 
+        if (user) {
+            res.status(200) 
+            .json(user)
+        } else {
+            res.status(404)
+            .json({
+                message: 'Could not find the user to update'
+            })
+            
+        }
+    } catch (error) {
+        res.status(500) 
+        .json({
+            message: `Error updating the user. Error: ${error}`
+        })
+    }
+});
 
 
 
