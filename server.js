@@ -2,8 +2,11 @@ const express = require('express');
 const UserRouter = require('./user-router.js');
 const PostRouter = require('./post-router.js'); 
 const server = express(); 
+const { capitalizeName } = require('./middleware/middleware'); 
 
-//MIDDLEWARE 
+
+
+
 server.use(express.json()); 
 
 

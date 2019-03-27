@@ -1,6 +1,6 @@
 const express = require('express'); 
 const UserDB = require('./data/helpers/userDb.js'); 
-
+const { capitalizeName } = require('./middleware/middleware'); 
 const router = express.Router(); 
 
 // api/users route 
@@ -38,9 +38,9 @@ router.get('/:id', async (req, res) => {
 
 // Post user 
 
-router.post('/', async (req, res) => {
+router.post('/', capitalizeName, async (req, res) => {
     try {
-        const user = await UserDB.insert(req.body); 
+        const user = await UserDB.insert( { name: req.body.capitalizedName}); 
         res.status(201).json(user);
     } catch (error) {
         res.status(500)
@@ -52,9 +52,9 @@ router.post('/', async (req, res) => {
 
 // Put user 
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', capitalizeName, async (req, res) => {
     try {
-        const user = await UserDB.update(req.params.id, req.body); 
+        const user = await UserDB.update(req.params.id, {name: req.body.capitalizedName}); 
         if (user) {
             res.status(200) 
             .json(user)
