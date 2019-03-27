@@ -73,7 +73,27 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// Delete user
 
+router.delete('/:id', async (req, res) => {
+    try {
+        user = await UserDB.remove(req.params.id); 
+        if (user) {
+            res.status(200)
+            .json(user)
+        } else {
+            res.status(404) 
+            .json({
+                message: 'Could not find user to delete'
+            })
+        }
+    } catch (error) {
+        res.status(500)
+        .json({
+            message: `Could not delete user. Error: ${error}`
+        })
+    }
+})
 
 
 module.exports = router 
