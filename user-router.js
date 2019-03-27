@@ -96,4 +96,26 @@ router.delete('/:id', async (req, res) => {
 })
 
 
+// GET POSTS BY USER ID 
+
+router.get('/:id/posts', async (req, res) => {
+    try {
+        const postsByUser = await UserDB.getUserPosts(req.params.id); 
+        if (postsByUser) {
+            res.status(200)
+            .json(postsByUser)
+        } else {
+            res.status(404)
+            .json({
+                message: `Could not find that user.`
+            })
+        }
+    } catch (error) {
+        res.status(500)
+        .json({
+            message: `Could not retrieve posts by user. Error: ${error} ` 
+        })
+    }
+}) 
+
 module.exports = router 
